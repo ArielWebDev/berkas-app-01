@@ -3,7 +3,7 @@ nodejs = "18"
 php = "8.2"
 
 [phases.setup]
-nixPkgs = ["nodejs", "npm", "php82", "php82Packages.composer"]
+nixPkgs = ["nodejs", "npm", "php82", "php82Packages.composer", "php82Extensions.pdo_mysql", "php82Extensions.mysqli"]
 
 [phases.install]
 cmds = [
