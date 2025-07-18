@@ -1,7 +1,0 @@
-[build]
-builder = "HEROKU"
-
-[deploy]
-startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
-healthcheckPath = "/"
-healthcheckTimeout = 300

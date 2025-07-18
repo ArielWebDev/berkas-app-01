@@ -1,0 +1,29 @@
+{
+  "name": "Berkas App",
+  "description": "Laravel application for document management",
+  "keywords": ["laravel", "php", "react", "inertia"],
+  "website": "https://github.com/ArielWebDev/berkas-app-01",
+  "repository": "https://github.com/ArielWebDev/berkas-app-01",
+  "buildpacks": [
+    {
+      "url": "heroku/php"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "APP_ENV": {
+      "value": "production"
+    },
+    "APP_DEBUG": {
+      "value": "false"
+    },
+    "LOG_CHANNEL": {
+      "value": "errorlog"
+    }
+  },
+  "scripts": {
+    "postdeploy": "php artisan migrate --force && php artisan db:seed --force --class=UserSeeder"
+  }
+}
