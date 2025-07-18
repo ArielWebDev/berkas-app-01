@@ -17,10 +17,19 @@
       "value": "production"
     },
     "APP_DEBUG": {
-      "value": "false"
+      "value": "true"
     },
     "LOG_CHANNEL": {
       "value": "errorlog"
+    },
+    "LOG_LEVEL": {
+      "value": "debug"
+    },
+    "SESSION_DRIVER": {
+      "value": "file"
+    },
+    "CACHE_DRIVER": {
+      "value": "file"
     }
   },
   "scripts": {

@@ -1,0 +1,28 @@
+[variables]
+NODE_VERSION = "18"
+
+[phases.setup]
+aptPkgs = ["default-mysql-client"]
+
+[phases.install]
+cmds = [
+    "composer install --no-dev --optimize-autoloader",
+    "npm ci",
+    "npm run build"
+]
+
+[phases.build]
+cmds = [
+    "php artisan config:cache",
+    "php artisan route:cache", 
+    "php artisan view:cache"
+]
+
+[phases.deploy]
+cmds = [
+    "php artisan migrate --force",
+    "php artisan db:seed --force --class=UserSeeder"
+]
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"

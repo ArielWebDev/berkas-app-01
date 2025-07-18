@@ -2,8 +2,9 @@
 
 ## 🗄️ Database Import & Migration - OTOMATIS!
 
-**TIDAK PERLU IMPORT MANUAL!** 
+**TIDAK PERLU IMPORT MANUAL!**
 Database akan dibuat otomatis saat deployment dengan:
+
 - ✅ **Auto Migration**: Semua tabel akan dibuat otomatis dari migration files
 - ✅ **Auto Seeding**: User admin akan dibuat otomatis
 - ✅ **Production Ready**: Siap pakai tanpa setup manual
