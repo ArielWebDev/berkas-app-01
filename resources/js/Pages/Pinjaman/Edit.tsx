@@ -1,7 +1,20 @@
+import TechStackBackground from '@/Components/TechStackBackground';
+import { Badge } from '@/Components/ui/badge';
+import { Button } from '@/Components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import TailLayout from '@/Layouts/TailLayout';
 import { PageProps } from '@/types';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { Head, Link, router, useForm } from '@inertiajs/react';
+import {
+  AlertTriangle,
+  ArrowLeft,
+  Calculator,
+  Calendar,
+  DollarSign,
+  FileText,
+  Percent,
+  User,
+} from 'lucide-react';
 import React from 'react';
 
 interface Nasabah {

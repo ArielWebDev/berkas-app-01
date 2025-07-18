@@ -1,6 +1,16 @@
-import React, { useState } from 'react';
 import { Link, router } from '@inertiajs/react';
-import { Eye, Edit, Trash2, Plus, Search, Lock, Unlock, UserCheck, Clock } from 'lucide-react';
+import {
+  Clock,
+  Edit,
+  Eye,
+  Lock,
+  Plus,
+  Search,
+  Trash2,
+  Unlock,
+  UserCheck,
+} from 'lucide-react';
+import React, { useState } from 'react';
 import WorkflowStepIndicator from './WorkflowStepIndicator';
 
 interface Nasabah {
@@ -119,35 +129,37 @@ const PinjamanDataTable: React.FC<PinjamanDataTableProps> = ({
   // Filter and sort data
   const filteredData = data
     .filter(item => {
-      const matchesSearch = 
-        item.nasabah?.nama_lengkap?.toLowerCase().includes(search.toLowerCase()) ||
+      const matchesSearch =
+        item.nasabah?.nama_lengkap
+          ?.toLowerCase()
+          .includes(search.toLowerCase()) ||
         item.nasabah?.nik?.includes(search) ||
         item.nasabah?.nomor_ktp?.includes(search) ||
         item.id.toString().includes(search);
-      
+
       const matchesStatus = statusFilter === '' || item.status === statusFilter;
-      
+
       return matchesSearch && matchesStatus;
     })
     .sort((a, b) => {
       let aValue = a[sortField];
       let bValue = b[sortField];
-      
+
       if (sortField === 'nasabah') {
         aValue = a.nasabah?.nama_lengkap || '';
         bValue = b.nasabah?.nama_lengkap || '';
       }
-      
+
       if (typeof aValue === 'string' && typeof bValue === 'string') {
-        return sortDirection === 'asc' 
+        return sortDirection === 'asc'
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
       }
-      
+
       if (typeof aValue === 'number' && typeof bValue === 'number') {
         return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
       }
-      
+
       return 0;
     });
 
@@ -188,20 +200,26 @@ const PinjamanDataTable: React.FC<PinjamanDataTableProps> = ({
   };
 
   const handleTakePinjaman = (pinjamanId: number) => {
-    router.post(`/workflow/take/${pinjamanId}`, {
-      catatan: 'Berkas diambil untuk diproses'
-    }, {
-      preserveState: false,
-      preserveScroll: true,
-      onSuccess: (page) => {
-        // Force refresh the page to get updated data
-        window.location.reload();
+    router.post(
+      `/workflow/take/${pinjamanId}`,
+      {
+        catatan: 'Berkas diambil untuk diproses',
       },
-      onError: (errors) => {
-        console.error('Error taking pinjaman:', errors);
-        alert('Gagal mengambil berkas: ' + (errors.message || 'Terjadi kesalahan'));
+      {
+        preserveState: false,
+        preserveScroll: true,
+        onSuccess: page => {
+          // Force refresh the page to get updated data
+          window.location.reload();
+        },
+        onError: errors => {
+          console.error('Error taking pinjaman:', errors);
+          alert(
+            'Gagal mengambil berkas: ' + (errors.message || 'Terjadi kesalahan')
+          );
+        },
       }
-    });
+    );
   };
 
   const getAvailabilityStatus = (item: Pinjaman) => {
@@ -240,24 +258,30 @@ const PinjamanDataTable: React.FC<PinjamanDataTableProps> = ({
 
   const renderAvailabilityIndicator = (item: Pinjaman) => {
     const availability = getAvailabilityStatus(item);
-    
+
     switch (availability) {
       case 'available':
         return (
           <div className="flex items-center">
-            <Unlock className="h-4 w-4 text-green-500 mr-2" />
-            <span className="text-sm text-green-600 font-medium">Tersedia Diambil</span>
+            <Unlock className="mr-2 h-4 w-4 text-green-500" />
+            <span className="text-sm font-medium text-green-600">
+              Tersedia Diambil
+            </span>
           </div>
         );
       case 'locked':
         const handler = item.admin_kredit || item.analis || item.pemutus;
         return (
           <div className="flex items-center">
-            <Lock className="h-4 w-4 text-red-500 mr-2" />
+            <Lock className="mr-2 h-4 w-4 text-red-500" />
             <div className="flex flex-col">
-              <span className="text-sm text-red-600 font-medium">Dikerjakan</span>
+              <span className="text-sm font-medium text-red-600">
+                Dikerjakan
+              </span>
               {handler && (
-                <span className="text-xs text-gray-500">oleh {handler.name}</span>
+                <span className="text-xs text-gray-500">
+                  oleh {handler.name}
+                </span>
               )}
             </div>
           </div>
@@ -265,21 +289,23 @@ const PinjamanDataTable: React.FC<PinjamanDataTableProps> = ({
       case 'working':
         return (
           <div className="flex items-center">
-            <UserCheck className="h-4 w-4 text-blue-500 mr-2" />
-            <span className="text-sm text-blue-600 font-medium">Sedang Dikerjakan</span>
+            <UserCheck className="mr-2 h-4 w-4 text-blue-500" />
+            <span className="text-sm font-medium text-blue-600">
+              Sedang Dikerjakan
+            </span>
           </div>
         );
       case 'need_action':
         return (
           <div className="flex items-center">
-            <Clock className="h-4 w-4 text-orange-500 mr-2" />
-            <span className="text-sm text-orange-600 font-medium">Perlu Tindakan</span>
+            <Clock className="mr-2 h-4 w-4 text-orange-500" />
+            <span className="text-sm font-medium text-orange-600">
+              Perlu Tindakan
+            </span>
           </div>
         );
       default:
-        return (
-          <span className="text-sm text-gray-500">-</span>
-        );
+        return <span className="text-sm text-gray-500">-</span>;
     }
   };
 
@@ -289,7 +315,9 @@ const PinjamanDataTable: React.FC<PinjamanDataTableProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Daftar Pinjaman</h1>
-          <p className="text-gray-600">Kelola semua pengajuan pinjaman nasabah</p>
+          <p className="text-gray-600">
+            Kelola semua pengajuan pinjaman nasabah
+          </p>
         </div>
         {canCreate && (
           <Link
@@ -352,23 +380,28 @@ const PinjamanDataTable: React.FC<PinjamanDataTableProps> = ({
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th 
+                <th
                   className="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
                   onClick={() => handleSort('id')}
                 >
-                  ID {sortField === 'id' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  ID{' '}
+                  {sortField === 'id' && (sortDirection === 'asc' ? '↑' : '↓')}
                 </th>
-                <th 
+                <th
                   className="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
                   onClick={() => handleSort('nasabah' as keyof Pinjaman)}
                 >
-                  Nasabah {sortField === 'nasabah' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  Nasabah{' '}
+                  {sortField === 'nasabah' &&
+                    (sortDirection === 'asc' ? '↑' : '↓')}
                 </th>
-                <th 
+                <th
                   className="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
                   onClick={() => handleSort('jumlah_pinjaman')}
                 >
-                  Jumlah {sortField === 'jumlah_pinjaman' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  Jumlah{' '}
+                  {sortField === 'jumlah_pinjaman' &&
+                    (sortDirection === 'asc' ? '↑' : '↓')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                   Tujuan
@@ -382,17 +415,21 @@ const PinjamanDataTable: React.FC<PinjamanDataTableProps> = ({
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                   Jangka Waktu
                 </th>
-                <th 
+                <th
                   className="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
                   onClick={() => handleSort('status')}
                 >
-                  Status {sortField === 'status' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  Status{' '}
+                  {sortField === 'status' &&
+                    (sortDirection === 'asc' ? '↑' : '↓')}
                 </th>
-                <th 
+                <th
                   className="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
                   onClick={() => handleSort('created_at')}
                 >
-                  Tanggal {sortField === 'created_at' && (sortDirection === 'asc' ? '↑' : '↓')}
+                  Tanggal{' '}
+                  {sortField === 'created_at' &&
+                    (sortDirection === 'asc' ? '↑' : '↓')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                   Aksi
@@ -411,7 +448,8 @@ const PinjamanDataTable: React.FC<PinjamanDataTableProps> = ({
                         {item.nasabah?.nama_lengkap || 'N/A'}
                       </div>
                       <div className="text-sm text-gray-500">
-                        NIK: {item.nasabah?.nik || item.nasabah?.nomor_ktp || 'N/A'}
+                        NIK:{' '}
+                        {item.nasabah?.nik || item.nasabah?.nomor_ktp || 'N/A'}
                       </div>
                       <div className="text-sm text-gray-500">
                         WA: {item.nasabah?.nomor_wa || 'N/A'}
@@ -446,56 +484,66 @@ const PinjamanDataTable: React.FC<PinjamanDataTableProps> = ({
                         {getAvailabilityStatus(item) === 'available' && (
                           <button
                             onClick={() => handleTakePinjaman(item.id)}
-                            className="inline-flex items-center px-3 py-1 border border-green-300 rounded-md text-xs font-medium text-green-700 bg-green-50 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+                            className="inline-flex items-center rounded-md border border-green-300 bg-green-50 px-3 py-1 text-xs font-medium text-green-700 transition-colors hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                             title="Ambil Berkas"
                           >
-                            <UserCheck className="h-3 w-3 mr-1" />
+                            <UserCheck className="mr-1 h-3 w-3" />
                             Ambil
                           </button>
                         )}
-                        
+
                         {/* View Button */}
                         <Link
                           href={`/pinjaman/${item.id}`}
-                          className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50 transition-colors"
+                          className="rounded p-1 text-blue-600 transition-colors hover:bg-blue-50 hover:text-blue-900"
                           title="Lihat Detail"
                         >
                           <Eye className="h-4 w-4" />
                         </Link>
-                        
+
                         {/* Edit Button - only for certain roles and statuses */}
-                        {(currentUserRole === 'staf_input' || currentUserRole === 'admin') && (
+                        {(currentUserRole === 'staf_input' ||
+                          currentUserRole === 'admin') && (
                           <Link
                             href={`/pinjaman/${item.id}/edit`}
-                            className="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50 transition-colors"
+                            className="rounded p-1 text-green-600 transition-colors hover:bg-green-50 hover:text-green-900"
                             title="Edit"
                           >
                             <Edit className="h-4 w-4" />
                           </Link>
                         )}
-                        
+
                         {/* Delete Button - only for diajukan status and authorized roles */}
-                        {item.status === 'diajukan' && (currentUserRole === 'staf_input' || currentUserRole === 'admin') && onDelete && (
-                          <button
-                            onClick={() => onDelete(item.id)}
-                            className="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50 transition-colors"
-                            title="Hapus"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        )}
+                        {item.status === 'diajukan' &&
+                          (currentUserRole === 'staf_input' ||
+                            currentUserRole === 'admin') &&
+                          onDelete && (
+                            <button
+                              onClick={() => onDelete(item.id)}
+                              className="rounded p-1 text-red-600 transition-colors hover:bg-red-50 hover:text-red-900"
+                              title="Hapus"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          )}
                       </div>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={10} className="px-6 py-12 text-center text-sm text-gray-500">
+                  <td
+                    colSpan={10}
+                    className="px-6 py-12 text-center text-sm text-gray-500"
+                  >
                     <div className="flex flex-col items-center">
                       <Search className="mx-auto h-12 w-12 text-gray-400" />
-                      <h3 className="mt-2 text-sm font-medium text-gray-900">Tidak ada data</h3>
+                      <h3 className="mt-2 text-sm font-medium text-gray-900">
+                        Tidak ada data
+                      </h3>
                       <p className="mt-1 text-sm text-gray-500">
-                        Tidak ada pinjaman yang sesuai dengan filter yang dipilih.
+                        Tidak ada pinjaman yang sesuai dengan filter yang
+                        dipilih.
                       </p>
                     </div>
                   </td>

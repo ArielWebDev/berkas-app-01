@@ -1,9 +1,9 @@
-import { Head } from '@inertiajs/react';
-import TailLayout from '@/Layouts/TailLayout';
-import { PageProps } from '@/types';
 import StatisticsCardSimple from '@/Components/StatisticsCardSimple';
 import WorkflowStepIndicator from '@/Components/WorkflowStepIndicator';
+import TailLayout from '@/Layouts/TailLayout';
+import { PageProps } from '@/types';
 import { ClockIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
+import { Head } from '@inertiajs/react';
 
 interface WorkflowDashboardProps extends PageProps {
   stats: Record<string, number>;
@@ -121,7 +121,7 @@ const WorkflowDashboard: React.FC<WorkflowDashboardProps> = ({
   };
 
   return (
-    <TailLayout user={auth.user}>
+    <TailLayout>
       <Head title="Workflow Dashboard" />
 
       <div className="py-12">
@@ -199,7 +199,7 @@ const WorkflowDashboard: React.FC<WorkflowDashboardProps> = ({
                   </h2>
                   <div className="overflow-hidden bg-white shadow sm:rounded-md">
                     <ul className="divide-y divide-gray-200">
-                      {recentActivities.slice(0, 5).map((activity) => (
+                      {recentActivities.slice(0, 5).map(activity => (
                         <li key={activity.id}>
                           <div className="px-4 py-4 sm:px-6">
                             <div className="flex items-center justify-between">
@@ -228,7 +228,7 @@ const WorkflowDashboard: React.FC<WorkflowDashboardProps> = ({
                                         oleh {activity.last_activity.user} •{' '}
                                         <time>
                                           {formatDate(
-                                            activity.last_activity.created_at,
+                                            activity.last_activity.created_at
                                           )}
                                         </time>
                                       </p>

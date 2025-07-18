@@ -199,13 +199,13 @@ const PinjamanIndex: React.FC<PinjamanIndexProps> = ({
       field: 'nasabah.nama_lengkap',
       headerName: 'Nama Nasabah',
       width: 200,
-      valueGetter: params => params.row.nasabah?.nama_lengkap || 'N/A',
+      valueGetter: (params: any) => params.row.nasabah?.nama_lengkap || 'N/A',
     },
     {
       field: 'nasabah.nik',
       headerName: 'NIK',
       width: 150,
-      valueGetter: params => params.row.nasabah?.nik || 'N/A',
+      valueGetter: (params: any) => params.row.nasabah?.nik || 'N/A',
     },
     {
       field: 'jumlah_pinjaman',

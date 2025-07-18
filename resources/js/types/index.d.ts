@@ -11,6 +11,7 @@ export interface Nasabah {
   id: number;
   nama_lengkap: string;
   nik: string;
+  nomor_ktp?: string; // For backward compatibility
   alamat: string;
   nomor_wa: string;
   tempat_lahir?: string;

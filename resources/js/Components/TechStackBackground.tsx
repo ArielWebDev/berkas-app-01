@@ -1,25 +1,36 @@
-import React from 'react';
-import { 
-  SiLaravel, 
-  SiReact, 
-  SiTypescript, 
-  SiVite, 
+import {
+  SiLaravel,
   SiMysql,
-  SiTailwindcss
+  SiReact,
+  SiTailwindcss,
+  SiTypescript,
+  SiVite,
 } from 'react-icons/si';
 
 interface TechStackBackgroundProps {
   className?: string;
 }
 
-export default function TechStackBackground({ className = "" }: TechStackBackgroundProps) {
+export default function TechStackBackground({
+  className = '',
+}: TechStackBackgroundProps) {
   const technologies = [
-    { icon: SiLaravel, name: "Laravel", color: "text-red-500", delay: "0s" },
-    { icon: SiReact, name: "React", color: "text-blue-500", delay: "0.5s" },
-    { icon: SiTypescript, name: "TypeScript", color: "text-blue-600", delay: "1s" },
-    { icon: SiVite, name: "Vite", color: "text-purple-500", delay: "1.5s" },
-    { icon: SiMysql, name: "MySQL", color: "text-orange-500", delay: "2s" },
-    { icon: SiTailwindcss, name: "Tailwind", color: "text-cyan-500", delay: "2.5s" },
+    { icon: SiLaravel, name: 'Laravel', color: 'text-red-500', delay: '0s' },
+    { icon: SiReact, name: 'React', color: 'text-blue-500', delay: '0.5s' },
+    {
+      icon: SiTypescript,
+      name: 'TypeScript',
+      color: 'text-blue-600',
+      delay: '1s',
+    },
+    { icon: SiVite, name: 'Vite', color: 'text-purple-500', delay: '1.5s' },
+    { icon: SiMysql, name: 'MySQL', color: 'text-orange-500', delay: '2s' },
+    {
+      icon: SiTailwindcss,
+      name: 'Tailwind',
+      color: 'text-cyan-500',
+      delay: '2.5s',
+    },
   ];
 
   // Generate random positions for floating icons
@@ -33,33 +44,35 @@ export default function TechStackBackground({ className = "" }: TechStackBackgro
   ];
 
   return (
-    <div className={`fixed inset-0 pointer-events-none overflow-hidden z-0 ${className}`}>
+    <div
+      className={`pointer-events-none fixed inset-0 z-0 overflow-hidden ${className}`}
+    >
       {/* Floating Tech Icons */}
       {technologies.map((tech, index) => {
         const IconComponent = tech.icon;
         const position = positions[index];
-        
+
         return (
           <div
             key={tech.name}
-            className="absolute animate-float-gentle opacity-20 hover:opacity-40 transition-opacity duration-500"
+            className="animate-float-gentle absolute opacity-20 transition-opacity duration-500 hover:opacity-40"
             style={{
               ...position,
               animationDelay: tech.delay,
-              animationDuration: `${8 + index * 2}s`
+              animationDuration: `${8 + index * 2}s`,
             }}
           >
-            <div className="relative group">
+            <div className="group relative">
               {/* Glow effect */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-current to-transparent opacity-30 blur-xl scale-150 animate-pulse"></div>
-              
+              <div className="absolute inset-0 scale-150 animate-pulse rounded-full bg-gradient-to-r from-current to-transparent opacity-30 blur-xl"></div>
+
               {/* Main icon */}
-              <IconComponent 
-                className={`w-12 h-12 ${tech.color} drop-shadow-lg transform group-hover:scale-110 transition-transform duration-300`}
+              <IconComponent
+                className={`h-12 w-12 ${tech.color} transform drop-shadow-lg transition-transform duration-300 group-hover:scale-110`}
               />
-              
+
               {/* Subtle label that appears on hover */}
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-1 bg-black/60 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              <div className="absolute left-1/2 top-full mt-2 -translate-x-1/2 transform whitespace-nowrap rounded bg-black/60 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 {tech.name}
               </div>
             </div>
@@ -69,8 +82,11 @@ export default function TechStackBackground({ className = "" }: TechStackBackgro
 
       {/* Animated Grid Pattern */}
       <div className="absolute inset-0 opacity-[0.02]">
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 animate-gradient-x"></div>
-        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <div className="animate-gradient-x absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500"></div>
+        <svg
+          className="absolute inset-0 h-full w-full"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <defs>
             <pattern
               id="tech-grid"
@@ -98,19 +114,19 @@ export default function TechStackBackground({ className = "" }: TechStackBackgro
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full opacity-20 animate-float-particle"
+            className="animate-float-particle absolute h-1 w-1 rounded-full bg-gradient-to-r from-indigo-400 to-purple-400 opacity-20"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 10}s`,
-              animationDuration: `${15 + Math.random() * 20}s`
+              animationDuration: `${15 + Math.random() * 20}s`,
             }}
           />
         ))}
       </div>
 
       {/* Subtle code-like background pattern */}
-      <div className="absolute bottom-4 right-4 opacity-5 font-mono text-xs leading-relaxed">
+      <div className="absolute bottom-4 right-4 font-mono text-xs leading-relaxed opacity-5">
         <div className="space-y-1">
           <div>&lt;?php namespace App\Models;</div>
           <div>import React from 'react';</div>

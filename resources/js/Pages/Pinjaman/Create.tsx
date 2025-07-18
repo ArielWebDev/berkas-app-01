@@ -13,7 +13,6 @@ import {
   MagnifyingGlassIcon,
   PlusIcon,
   UserIcon,
-  UserPlusIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { Head, Link, useForm } from '@inertiajs/react';
@@ -62,7 +61,7 @@ export default function CreatePinjaman({ auth, nasabah }: CreatePinjamanProps) {
     setSearchTerm('');
     setShowSearchResults(false);
   };
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data, setData, post, processing, errors, progress } = useForm({
     nasabah_id: '',
@@ -289,7 +288,7 @@ export default function CreatePinjaman({ auth, nasabah }: CreatePinjamanProps) {
                           </div>
                         </div>
                       ))}
-                      
+
                       {/* Opsi Tambah Nasabah Baru */}
                       <Link
                         href={route('nasabah.create')}
@@ -391,7 +390,7 @@ export default function CreatePinjaman({ auth, nasabah }: CreatePinjamanProps) {
               helpText="Masukkan jumlah pinjaman dalam Rupiah"
               icon={<BanknotesIcon />}
             />
-            
+
             <FormInput
               label="Tujuan Pinjaman"
               value={data.tujuan_pinjaman}
@@ -440,7 +439,7 @@ export default function CreatePinjaman({ auth, nasabah }: CreatePinjamanProps) {
               <h3 className="mb-4 text-lg font-medium text-gray-900 dark:text-gray-100">
                 Upload Berkas Pendukung
               </h3>
-              
+
               <FormFileInput
                 label="Pilih Berkas"
                 onChange={e => handleFileUpload(e.target.files)}
@@ -497,7 +496,7 @@ export default function CreatePinjaman({ auth, nasabah }: CreatePinjamanProps) {
   return (
     <TailLayout>
       <Head title="Buat Pengajuan Pinjaman" />
-      
+
       {/* Tech Stack Background */}
       <TechStackBackground />
 
@@ -570,7 +569,7 @@ export default function CreatePinjaman({ auth, nasabah }: CreatePinjamanProps) {
                     </Button>
                   )}
                 </div>
-                
+
                 <div className="flex gap-2">
                   <Button
                     type="button"
@@ -579,7 +578,7 @@ export default function CreatePinjaman({ auth, nasabah }: CreatePinjamanProps) {
                   >
                     Batal
                   </Button>
-                  
+
                   {currentStep < 3 ? (
                     <Button
                       type="button"

@@ -6,7 +6,7 @@ import { FormEventHandler, useState } from 'react';
 export default function Create() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, processing, errors } = useForm({
     nama_lengkap: '',
     nik: '',
     alamat: '',
@@ -39,7 +39,7 @@ export default function Create() {
     post(route('nasabah.store'), {
       onSuccess: () => {
         setIsLoading(false);
-        reset();
+        // Form will be automatically reset by navigation
       },
       onError: () => {
         setIsLoading(false);

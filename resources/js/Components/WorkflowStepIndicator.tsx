@@ -1,4 +1,3 @@
-import { CheckCircle2, Circle, Clock } from 'lucide-react';
 import React from 'react';
 
 interface WorkflowStepIndicatorProps {
@@ -21,7 +20,13 @@ const WorkflowStepIndicator: React.FC<WorkflowStepIndicatorProps> = ({
   ];
 
   const getStepStatus = (stepId: string) => {
-    const statusOrder = ['diajukan', 'diperiksa', 'dianalisis', 'siap_diputuskan', 'disetujui'];
+    const statusOrder = [
+      'diajukan',
+      'diperiksa',
+      'dianalisis',
+      'siap_diputuskan',
+      'disetujui',
+    ];
     const currentIndex = statusOrder.indexOf(currentStatus);
     const stepIndex = statusOrder.indexOf(stepId);
 

@@ -13,7 +13,11 @@ import { useState } from 'react';
 interface Props {
   nasabah: {
     data: Nasabah[];
-    links: any[];
+    links: Array<{
+      url: string | null;
+      label: string;
+      active: boolean;
+    }>;
     meta: {
       current_page: number;
       last_page: number;
@@ -43,10 +47,6 @@ export default function Index({ nasabah, search }: Props) {
       style: 'currency',
       currency: 'IDR',
     }).format(amount);
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('id-ID');
   };
 
   const getGenderText = (gender?: string) => {

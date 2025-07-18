@@ -25,6 +25,9 @@ export default function NasabahCreate({ errors = {} }: Props) {
     pekerjaan: '',
     penghasilan: 0,
     status_perkawinan: 'belum_kawin',
+    nama_ibu_kandung: '',
+    agama: '',
+    penghasilan_bulanan: 0,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,17 +65,12 @@ export default function NasabahCreate({ errors = {} }: Props) {
     });
   };
 
-  const formatCurrency = (value: string) => {
-    const number = value.replace(/[^\d]/g, '');
-    return new Intl.NumberFormat('id-ID').format(Number(number));
-  };
-
   const handlePenghasilanChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const formatted = formatCurrency(value);
+    const numericValue = parseFloat(value.replace(/[^\d]/g, '')) || 0;
     setFormData(prev => ({
       ...prev,
-      penghasilan_bulanan: formatted,
+      penghasilan_bulanan: numericValue,
     }));
   };
 

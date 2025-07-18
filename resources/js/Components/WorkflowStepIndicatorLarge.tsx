@@ -1,6 +1,12 @@
-import { CheckCircle2, Circle, Clock, User } from 'lucide-react';
+import {
+  CheckCircle,
+  CheckCircle2,
+  Clock,
+  FileText,
+  Scale,
+  User,
+} from 'lucide-react';
 import React from 'react';
-import { CheckCircle, Clock, User, FileText, Scale, CheckCircle2 } from 'lucide-react';
 
 interface WorkflowStepIndicatorLargeProps {
   currentStatus: string;
@@ -55,7 +61,13 @@ const WorkflowStepIndicatorLarge: React.FC<WorkflowStepIndicatorLargeProps> = ({
   ];
 
   const getStepStatus = (stepId: string) => {
-    const statusOrder = ['diajukan', 'diperiksa', 'dianalisis', 'siap_diputuskan', 'disetujui'];
+    const statusOrder = [
+      'diajukan',
+      'diperiksa',
+      'dianalisis',
+      'siap_diputuskan',
+      'disetujui',
+    ];
     const currentIndex = statusOrder.indexOf(currentStatus);
     const stepIndex = statusOrder.indexOf(stepId);
 
@@ -103,30 +115,38 @@ const WorkflowStepIndicatorLarge: React.FC<WorkflowStepIndicatorLargeProps> = ({
   return (
     <div className="space-y-4">
       {currentStatus === 'dikembalikan' && (
-        <div className="rounded-lg bg-red-50 border border-red-200 p-4">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4">
           <div className="flex items-center">
-            <Clock className="h-5 w-5 text-red-500 mr-2" />
+            <Clock className="mr-2 h-5 w-5 text-red-500" />
             <div>
-              <h4 className="text-sm font-medium text-red-800">Berkas Dikembalikan</h4>
-              <p className="text-sm text-red-600">Berkas perlu diperbaiki dan diajukan kembali</p>
+              <h4 className="text-sm font-medium text-red-800">
+                Berkas Dikembalikan
+              </h4>
+              <p className="text-sm text-red-600">
+                Berkas perlu diperbaiki dan diajukan kembali
+              </p>
             </div>
           </div>
         </div>
       )}
 
       {currentStatus === 'ditolak' && (
-        <div className="rounded-lg bg-red-50 border border-red-200 p-4">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4">
           <div className="flex items-center">
-            <CheckCircle2 className="h-5 w-5 text-red-500 mr-2" />
+            <CheckCircle2 className="mr-2 h-5 w-5 text-red-500" />
             <div>
-              <h4 className="text-sm font-medium text-red-800">Pinjaman Ditolak</h4>
-              <p className="text-sm text-red-600">Pengajuan pinjaman telah ditolak</p>
+              <h4 className="text-sm font-medium text-red-800">
+                Pinjaman Ditolak
+              </h4>
+              <p className="text-sm text-red-600">
+                Pengajuan pinjaman telah ditolak
+              </p>
             </div>
           </div>
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
         {steps.map((step, index) => {
           const status = getStepStatus(step.id);
           const classes = getStepClasses(status);
@@ -136,23 +156,27 @@ const WorkflowStepIndicatorLarge: React.FC<WorkflowStepIndicatorLargeProps> = ({
             <div key={step.id} className="relative">
               <div className={`rounded-lg border p-4 ${classes.container}`}>
                 <div className="flex items-start space-x-3">
-                  <div className={`flex-shrink-0 rounded-full p-2 ${classes.icon}`}>
+                  <div
+                    className={`flex-shrink-0 rounded-full p-2 ${classes.icon}`}
+                  >
                     <IconComponent className="h-5 w-5" />
                   </div>
-                  <div className="flex-1 min-w-0">
+                  <div className="min-w-0 flex-1">
                     <h3 className={`text-sm font-medium ${classes.title}`}>
                       {step.label}
                     </h3>
-                    <p className={`text-xs mt-1 ${classes.description}`}>
+                    <p className={`mt-1 text-xs ${classes.description}`}>
                       {step.description}
                     </p>
                     {step.user && (
-                      <p className={`text-xs mt-2 font-medium ${classes.title}`}>
+                      <p
+                        className={`mt-2 text-xs font-medium ${classes.title}`}
+                      >
                         👤 {step.user}
                       </p>
                     )}
                     {status === 'current' && !step.user && (
-                      <p className="text-xs mt-2 text-orange-600 font-medium">
+                      <p className="mt-2 text-xs font-medium text-orange-600">
                         🕐 Menunggu diambil
                       </p>
                     )}
@@ -162,10 +186,12 @@ const WorkflowStepIndicatorLarge: React.FC<WorkflowStepIndicatorLargeProps> = ({
 
               {/* Connection line */}
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2">
-                  <div className={`w-8 h-0.5 ${
-                    status === 'completed' ? 'bg-green-300' : 'bg-gray-200'
-                  }`} />
+                <div className="absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-1/2 transform md:block">
+                  <div
+                    className={`h-0.5 w-8 ${
+                      status === 'completed' ? 'bg-green-300' : 'bg-gray-200'
+                    }`}
+                  />
                 </div>
               )}
             </div>

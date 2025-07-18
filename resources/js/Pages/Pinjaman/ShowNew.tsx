@@ -178,9 +178,10 @@ export default function ShowPinjaman({ auth, pinjaman }: ShowPinjamanProps) {
     }
 
     post(getUploadRoute(), {
-      _method: 'POST',
-      nama_berkas: data.nama_berkas,
-      file: data.file,
+      data: {
+        nama_berkas: data.nama_berkas,
+        file: data.file,
+      },
       onSuccess: () => {
         reset();
         setShowUploadForm(false);

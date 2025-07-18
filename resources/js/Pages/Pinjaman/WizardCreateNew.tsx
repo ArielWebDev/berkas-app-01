@@ -24,7 +24,6 @@ interface FormData {
   jangka_waktu: number;
   bunga: number;
   berkas: File[];
-  [key: string]: any; // Index signature untuk TypeScript
 }
 
 export default function WizardCreate({ nasabah_list }: WizardCreateProps) {
@@ -32,13 +31,13 @@ export default function WizardCreate({ nasabah_list }: WizardCreateProps) {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data, setData, post, processing, errors, reset } = useForm<FormData>({
+  const { data, setData, post, processing, errors } = useForm({
     nasabah_id: '',
     jumlah_pinjaman: 0,
     tujuan_pinjaman: '',
     jangka_waktu: 12,
     bunga: 2.5,
-    berkas: [],
+    berkas: [] as File[],
   });
 
   const steps = [
@@ -135,7 +134,7 @@ export default function WizardCreate({ nasabah_list }: WizardCreateProps) {
     });
 
     post(route('pinjaman.store.wizard'), {
-      onSuccess: response => {
+      onSuccess: () => {
         setIsLoading(false);
         // Redirect ke halaman pinjaman dengan pesan sukses
         router.visit('/pinjaman', {

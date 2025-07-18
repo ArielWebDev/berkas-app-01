@@ -11,7 +11,7 @@ interface Props {
 export default function Edit({ nasabah }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data, setData, put, processing, errors, reset } = useForm({
+  const { data, setData, put, processing, errors } = useForm({
     nama_lengkap: nasabah.nama_lengkap || '',
     nik: nasabah.nik || '',
     alamat: nasabah.alamat || '',

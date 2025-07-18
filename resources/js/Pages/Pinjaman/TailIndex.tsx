@@ -1,7 +1,23 @@
+import QuickActions from '@/Components/QuickActions';
+import StatusBadge from '@/Components/StatusBadge';
+import TechStackBackground from '@/Components/TechStackBackground';
+import { Badge } from '@/Components/ui/badge';
+import { Button } from '@/Components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
+import WorkflowProgress from '@/Components/WorkflowProgress';
 import TailLayout from '@/Layouts/TailLayout';
 import { PageProps } from '@/types';
+import { formatCurrency, formatDate } from '@/utils/formatters';
 import { Head, Link, router } from '@inertiajs/react';
-import { Edit, Eye, Plus, Search, Trash2 } from 'lucide-react';
+import {
+  BarChart3,
+  Edit,
+  Eye,
+  Plus,
+  Search,
+  Trash2,
+  TrendingUp,
+} from 'lucide-react';
 import React, { useState } from 'react';
 
 interface Nasabah {
@@ -385,113 +401,115 @@ const PinjamanIndex: React.FC<PinjamanIndexProps> = ({
               </Card>
             </div>
 
-      {/* Table */}
-      <div className="overflow-hidden rounded-lg bg-white shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                  ID
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                  Nasabah
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                  Jumlah Pinjaman
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                  Tujuan
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                  Jangka Waktu
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                  Tanggal
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                  Aksi
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {pinjaman?.data?.length > 0 ? (
-                pinjaman.data.map(item => (
-                  <tr key={item.id} className="hover:bg-gray-50">
-                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                      #{item.id}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm font-medium text-gray-900">
-                        {item.nasabah?.nama_lengkap ||
-                          item.nasabah?.nama ||
-                          'N/A'}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        NIK:{' '}
-                        {item.nasabah?.nik || item.nasabah?.nomor_ktp || 'N/A'}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        WA: {item.nasabah?.nomor_wa || 'N/A'}
-                      </div>
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-                      {formatCurrency(item.jumlah_pinjaman)}
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                      {item.tujuan_pinjaman}
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                      {item.jangka_waktu} bulan
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4">
-                      <StatusBadge status={item.status} />
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                      {formatDate(item.created_at)}
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
-                      <div className="flex items-center space-x-2">
-                        <Link
-                          href={`/pinjaman/${item.id}`}
-                          className="text-blue-600 hover:text-blue-900"
+            {/* Table */}
+            <div className="overflow-hidden rounded-lg bg-white shadow-sm">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                        ID
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                        Nasabah
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                        Jumlah Pinjaman
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                        Tujuan
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                        Jangka Waktu
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                        Status
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                        Tanggal
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                        Aksi
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 bg-white">
+                    {pinjaman?.data?.length > 0 ? (
+                      pinjaman.data.map(item => (
+                        <tr key={item.id} className="hover:bg-gray-50">
+                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                            #{item.id}
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="text-sm font-medium text-gray-900">
+                              {item.nasabah?.nama_lengkap ||
+                                item.nasabah?.nama ||
+                                'N/A'}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              NIK:{' '}
+                              {item.nasabah?.nik ||
+                                item.nasabah?.nomor_ktp ||
+                                'N/A'}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              WA: {item.nasabah?.nomor_wa || 'N/A'}
+                            </div>
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                            {formatCurrency(item.jumlah_pinjaman)}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                            {item.tujuan_pinjaman}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                            {item.jangka_waktu} bulan
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4">
+                            <StatusBadge status={item.status} />
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                            {formatDate(item.created_at)}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
+                            <div className="flex items-center space-x-2">
+                              <Link
+                                href={`/pinjaman/${item.id}`}
+                                className="text-blue-600 hover:text-blue-900"
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Link>
+                              <Link
+                                href={`/pinjaman/${item.id}/edit`}
+                                className="text-green-600 hover:text-green-900"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Link>
+                              <button
+                                onClick={() =>
+                                  setDeleteDialog({ open: true, id: item.id })
+                                }
+                                className="text-red-600 hover:text-red-900"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan={8}
+                          className="px-6 py-12 text-center text-sm text-gray-500"
                         >
-                          <Eye className="h-4 w-4" />
-                        </Link>
-                        <Link
-                          href={`/pinjaman/${item.id}/edit`}
-                          className="text-green-600 hover:text-green-900"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Link>
-                        <button
-                          onClick={() =>
-                            setDeleteDialog({ open: true, id: item.id })
-                          }
-                          className="text-red-600 hover:text-red-900"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={8}
-                    className="px-6 py-12 text-center text-sm text-gray-500"
-                  >
-                    Tidak ada data pinjaman yang ditemukan.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                          Tidak ada data pinjaman yang ditemukan.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
               {/* Pagination */}
               {pinjaman.links && pinjaman.links.length > 3 && (

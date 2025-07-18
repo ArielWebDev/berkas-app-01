@@ -95,15 +95,18 @@ const PinjamanIndex: React.FC<PinjamanIndexProps> = ({
     switch (action) {
       case 'approve_review':
         title = 'Setujui untuk Analisis';
-        message = 'Apakah Anda yakin ingin menyetujui pengajuan ini untuk dilanjutkan ke tahap analisis?';
+        message =
+          'Apakah Anda yakin ingin menyetujui pengajuan ini untuk dilanjutkan ke tahap analisis?';
         break;
       case 'return_to_staff':
         title = 'Kembalikan ke Staf';
-        message = 'Apakah Anda yakin ingin mengembalikan pengajuan ini ke staf input?';
+        message =
+          'Apakah Anda yakin ingin mengembalikan pengajuan ini ke staf input?';
         break;
       case 'analyze_complete':
         title = 'Selesaikan Analisis';
-        message = 'Apakah Anda yakin analisis sudah selesai dan siap untuk diputuskan?';
+        message =
+          'Apakah Anda yakin analisis sudah selesai dan siap untuk diputuskan?';
         break;
       case 'return_to_admin':
         title = 'Kembalikan ke Admin Kredit';
@@ -137,20 +140,37 @@ const PinjamanIndex: React.FC<PinjamanIndexProps> = ({
 
   const confirmWorkflowAction = (): void => {
     if (workflowDialog.id && workflowDialog.action) {
-      router.post(`/pinjaman/${workflowDialog.id}/workflow-action`, {
-        action: workflowDialog.action
-      }, {
-        onSuccess: () => {
-          setWorkflowDialog({ open: false, id: null, action: '', title: '', message: '' });
+      router.post(
+        `/pinjaman/${workflowDialog.id}/workflow-action`,
+        {
+          action: workflowDialog.action,
         },
-        onError: () => {
-          setWorkflowDialog({ open: false, id: null, action: '', title: '', message: '' });
-        },
-      });
+        {
+          onSuccess: () => {
+            setWorkflowDialog({
+              open: false,
+              id: null,
+              action: '',
+              title: '',
+              message: '',
+            });
+          },
+          onError: () => {
+            setWorkflowDialog({
+              open: false,
+              id: null,
+              action: '',
+              title: '',
+              message: '',
+            });
+          },
+        }
+      );
     }
   };
 
-  const canCreatePinjaman = auth.user.role === 'staf_input' || auth.user.role === 'admin';
+  const canCreatePinjaman =
+    auth.user.role === 'staf_input' || auth.user.role === 'admin';
 
   return (
     <TailLayout>
@@ -219,8 +239,18 @@ const PinjamanIndex: React.FC<PinjamanIndexProps> = ({
               <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                      className="h-6 w-6 text-blue-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                   </div>
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
@@ -245,7 +275,15 @@ const PinjamanIndex: React.FC<PinjamanIndexProps> = ({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setWorkflowDialog({ open: false, id: null, action: '', title: '', message: '' })}
+                  onClick={() =>
+                    setWorkflowDialog({
+                      open: false,
+                      id: null,
+                      action: '',
+                      title: '',
+                      message: '',
+                    })
+                  }
                   className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:mt-0 sm:w-auto sm:text-sm"
                 >
                   Batal
